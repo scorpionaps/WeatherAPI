@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.weather.forecast.entity.WeatherForeCastEntity;
+import com.weather.forecast.entity.WeatherForecastEntity;
 import com.weather.forecast.repository.WeatherForecastRepository;
 
 /**
@@ -31,8 +31,8 @@ public class ScheduledFixedRateHouseKeeper {
 		logger.info(
           "House Keeping Task Executed now at - " + System.currentTimeMillis() / 1000);
 		
-		List<WeatherForeCastEntity> listOfWeatherForeCastEntity = weatherForecastRepository.findAll();
-		for(WeatherForeCastEntity weatherForeCastEntity: listOfWeatherForeCastEntity)
+		List<WeatherForecastEntity> listOfWeatherForeCastEntity = weatherForecastRepository.findAll();
+		for(WeatherForecastEntity weatherForeCastEntity: listOfWeatherForeCastEntity)
 		{
 			if(weatherForeCastEntity.getLastUpdDate().isBefore(LocalDate.now().minusDays(3)))
 			{

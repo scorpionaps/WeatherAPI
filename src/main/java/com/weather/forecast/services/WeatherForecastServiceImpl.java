@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -26,7 +27,7 @@ import org.springframework.web.util.UriTemplate;
 import com.weather.forecast.beans.DefaultProperties;
 import com.weather.forecast.beans.WeatherDetails;
 import com.weather.forecast.constants.WeatherForeCastConstants;
-import com.weather.forecast.entity.WeatherForeCastEntity;
+import com.weather.forecast.entity.WeatherForecastEntity;
 import com.weather.forecast.repository.WeatherForecastRepository;
 
 /**
@@ -48,7 +49,6 @@ public class WeatherForecastServiceImpl implements WeatherForecastService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	@Cacheable("getDefaultWeatherForecast")
 	public List<WeatherDetails> getDefaultWeatherForecast(String defaultLocations) {
 		
 		String[] locationsArray = defaultLocations.split(",");
@@ -66,12 +66,11 @@ public class WeatherForecastServiceImpl implements WeatherForecastService {
 	}
 	
 	@Override
-	@Cacheable("getWeatherDetailsForCity")
 	public WeatherDetails getWeatherDetailsForCity(String cityName, String countryName) {
 		
 		WeatherDetails weatherDetails = new WeatherDetails();
-		logger.info("Call to fecth value from DB for City -{} and Country - {} started",cityName,countryName);
-		WeatherForeCastEntity weatherForeCastEntity = weatherForecastRepository.findBycityNameAndCountryName(cityName, countryName);
+		logger.info("Call to fetch value from DB for City -{} and Country - {} started",cityName,countryName);
+		WeatherForecastEntity weatherForeCastEntity = weatherForecastRepository.findBycityNameAndCountryName(cityName, countryName);
 		LocalDate todayDate = LocalDate.now();
 		
 		URI url = new UriTemplate(WeatherForeCastConstants.WEATHER_FORECAST_URL).expand(cityName, countryName, defaultProperties.getMyAppKey());
@@ -109,7 +108,7 @@ public class WeatherForecastServiceImpl implements WeatherForecastService {
 			weatherDetails = executeRestCall(url,WeatherDetails.class);
 			if(weatherDetails!=null)
 			{
-			weatherForeCastEntity = new WeatherForeCastEntity();
+			weatherForeCastEntity = new WeatherForecastEntity();
 			weatherForeCastEntity.setWeatherForecastId(cityName+countryName);
 			weatherForeCastEntity.setCityName(cityName);
 			weatherForeCastEntity.setCountryName(countryName);

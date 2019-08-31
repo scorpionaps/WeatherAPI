@@ -15,7 +15,7 @@ import org.springframework.data.annotation.Id;
  *
  */
 
-public class WeatherForeCastEntity {
+public class WeatherForecastEntity {
 	
 	@Id
 	private String weatherForecastId;
@@ -38,6 +38,25 @@ public class WeatherForeCastEntity {
 	private LocalDate lastUpdDate;
 	
 	
+	
+	public WeatherForecastEntity() {
+		super();
+	}
+
+	public WeatherForecastEntity(String weatherForecastId, String cityName, String countryName, String minTemp,
+			String maxTemp, String summary, String icon, String lastUpdId, LocalDate lastUpdDate) {
+		super();
+		this.weatherForecastId = weatherForecastId;
+		this.cityName = cityName;
+		this.countryName = countryName;
+		this.minTemp = minTemp;
+		this.maxTemp = maxTemp;
+		this.summary = summary;
+		this.icon = icon;
+		this.lastUpdId = lastUpdId;
+		this.lastUpdDate = lastUpdDate;
+	}
+
 	/**
 	 * @return the weatherForecastId
 	 */

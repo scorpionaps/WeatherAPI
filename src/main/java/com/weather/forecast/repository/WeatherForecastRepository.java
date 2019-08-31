@@ -4,16 +4,18 @@
 package com.weather.forecast.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-import com.weather.forecast.entity.WeatherForeCastEntity;
+import com.weather.forecast.entity.WeatherForecastEntity;
 
 /**
  * @author anandsingh
  *
  */
-public interface WeatherForecastRepository extends MongoRepository<WeatherForeCastEntity, String> {
+@Repository
+public interface WeatherForecastRepository extends MongoRepository<WeatherForecastEntity, String> {
 	
 	
-	WeatherForeCastEntity findBycityNameAndCountryName(String cityName, String CountryName);
+	WeatherForecastEntity findBycityNameAndCountryName(String cityName, String CountryName);
 
 }
